@@ -8,45 +8,70 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.hardware.camera2.*;
 import android.widget.ImageView;
 import android.widget.Toast;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static java.security.AccessController.getContext;
 
 public class Main extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1888;
     private ImageView imageView;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
+    private String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+    Uri saveImage = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/myCart/" + timeStamp + ".png"));
+    //Uri photoURI = FileProvider.getUriForFile(Main.this, BuildConfig.APPLICATION_ID + ".provider", new File(Environment.getExternalStorageDirectory() + "/myCart/" + timeStamp + ".png"));
+
+    private String TAG = "";
 
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        StrictMode.VmPolicy.Builder newbuilder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(newbuilder.build());
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        File myFolder = new File(Environment.getExternalStorageDirectory() + "/myCart/");
+        boolean success = true;
+        if(!myFolder.exists()){
+            success = myFolder.mkdir();
+        }
+
+
 
         fab.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{Manifest.permission.CAMERA},
-                            MY_CAMERA_PERMISSION_CODE);
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
                 } else {
                     Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, saveImage);
                     startActivityForResult(cameraIntent, CAMERA_REQUEST);
                 }
             }
