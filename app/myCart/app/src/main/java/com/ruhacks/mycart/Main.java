@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.hardware.camera2.*;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 import java.io.File;
@@ -57,6 +58,7 @@ public class Main extends AppCompatActivity {
         StrictMode.setVmPolicy(newbuilder.build());
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         File myFolder = new File(Environment.getExternalStorageDirectory() + "/myCart/");
+        Button testButton = (Button) findViewById(R.id.testButton);
         boolean success = true;
         if(!myFolder.exists()){
             success = myFolder.mkdir();
@@ -74,6 +76,12 @@ public class Main extends AppCompatActivity {
                     cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, saveImage);
                     startActivityForResult(cameraIntent, CAMERA_REQUEST);
                 }
+            }
+        });
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchFoodResultsActivity();
             }
         });
     }
@@ -116,5 +124,10 @@ public class Main extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void launchFoodResultsActivity(){
+        Intent intent = new Intent(this, FoodResultsActivity.class);
+        startActivity(intent);
     }
 }
