@@ -33,4 +33,10 @@
         app:layout_anchorGravity="bottom|center"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
+    <Button
+        android:id="@+id/testButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test: direct to food result page" />
+
 </android.support.design.widget.CoordinatorLayout>
