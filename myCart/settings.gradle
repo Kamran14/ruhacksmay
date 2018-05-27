@@ -1,0 +1,1 @@
+include ':app', ':httpmime-4.5.5', ':httpcore-4.4.9', ':gson-2.3.1'

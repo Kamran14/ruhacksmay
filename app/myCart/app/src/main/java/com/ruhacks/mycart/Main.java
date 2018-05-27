@@ -35,14 +35,24 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
+import cz.msebera.android.httpclient.HttpEntity;
+import cz.msebera.android.httpclient.HttpResponse;
+import cz.msebera.android.httpclient.client.HttpClient;
+import cz.msebera.android.httpclient.client.methods.HttpPost;
+import cz.msebera.android.httpclient.client.utils.URIBuilder;
+import cz.msebera.android.httpclient.entity.ByteArrayEntity;
+import cz.msebera.android.httpclient.impl.client.HttpClients;
+import cz.msebera.android.httpclient.util.EntityUtils;
+
 import static java.security.AccessController.getContext;
 
 public class Main extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1888;
     private ImageView imageView;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
-    private String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-    Uri saveImage = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/myCart/" + timeStamp + ".png"));
+    private String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".png";
+    Uri saveImage = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/myCart/" + timeStamp));
     //Uri photoURI = FileProvider.getUriForFile(Main.this, BuildConfig.APPLICATION_ID + ".provider", new File(Environment.getExternalStorageDirectory() + "/myCart/" + timeStamp + ".png"));
 
     private String TAG = "";
