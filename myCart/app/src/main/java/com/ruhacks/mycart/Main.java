@@ -150,13 +150,13 @@ public class Main extends AppCompatActivity {
 
 
         try {
-            URIBuilder builder = new URIBuilder("https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/77228d62-34c2-43ba-9de1-ad94be2a5c51/image?iterationId=04d0da0d-13ff-45c7-a5c8-fb33fda5ac24");
+            URIBuilder builder = new URIBuilder("Enter API URL");
 
 
             URI uri = builder.build();
             HttpPost request = new HttpPost(uri);
             request.setHeader("Content-Type", "application/octet-stream");
-            request.setHeader("Prediction-Key", "d2e9d859d93a471d87e7779f08d2637a");
+            request.setHeader("Prediction-Key", "Enter Prediction key");
 
 
             // Request body. The parameter of setEntity converts the image to base64
